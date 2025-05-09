@@ -1,19 +1,19 @@
 <?php
 
-    namespace midgarditltd\Games\Players\Commands;
+namespace midgarditltd\Games\Players\Commands;
 
-    use Illuminate\Console\Command;
+use Illuminate\Console\Command;
 
-    class PlayersCommand extends Command
+class PlayersCommand extends Command
+{
+    public $signature = 'games-players';
+
+    public $description = 'My command';
+
+    public function handle(): int
     {
-        public $signature = 'games-players';
+        $this->comment('All done');
 
-        public $description = 'My command';
-
-        public function handle(): int
-        {
-            $this->comment('All done');
-
-            return self::SUCCESS;
-        }
+        return self::SUCCESS;
     }
+}

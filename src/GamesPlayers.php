@@ -1,16 +1,16 @@
 <?php
 
-    namespace midgarditltd\Games\Players;
+namespace midgarditltd\Games\Players;
 
-    class GamesPlayers
+class GamesPlayers
+{
+    public function players()
     {
-        public function players()
-        {
-            return Player::all();
-        }
-
-        public function findPlayer($id)
-        {
-            return Player::findById($id);
-        }
+        return Player::all();
     }
+
+    public function findPlayer($id)
+    {
+        return Player::findById($id);
+    }
+}

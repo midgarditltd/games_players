@@ -1,14 +1,13 @@
 <?php
 
-    namespace midgarditltd\Games\Players\Facades;
+namespace midgarditltd\Games\Players\Facades;
 
-    use Illuminate\Support\Facades\Facade;
-    use midgarditltd\Games\Players\GamesPlayers as GamesPlayersClass;
+use Illuminate\Support\Facades\Facade;
 
-    class GamesPlayers extends Facade
+class GamesPlayers extends Facade
+{
+    protected static function getFacadeAccessor()
     {
-        protected static function getFacadeAccessor()
-        {
-            return 'games-players';
-        }
+        return 'games-players';
     }
+}

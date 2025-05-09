@@ -1,22 +1,22 @@
 <?php
 
-    namespace midgarditltd\Games\Players;
+namespace midgarditltd\Games\Players;
 
-    use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
-    class PlayerFactory extends Factory
+class PlayerFactory extends Factory
+{
+    protected $model = Player::class;
+
+    public function definition()
     {
-        protected $model = Player::class;
+        $userModel = config('games-players.user_model', config('auth.providers.users.model', User::class));
 
-        public function definition()
-        {
-            $userModel = config('games-players.user_model', config('auth.providers.users.model', User::class));
-
-            return [
-                'user_id'  => $userModel::factory(),
-                'nickname' => $this->faker->userName,
-                'active'   => $this->faker->boolean,
-                'options'  => NULL,
-            ];
-        }
+        return [
+            'user_id' => $userModel::factory(),
+            'nickname' => $this->faker->userName,
+            'active' => $this->faker->boolean,
+            'options' => null,
+        ];
     }
+}
