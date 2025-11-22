@@ -7,6 +7,10 @@
 
 A simple, lightweight Laravel package that provides a base Player model and migration for game packages. This package is designed to be included by other game packages as the main way to track players and their games.
 
+## Purpose
+
+This is the **foundation package** for all future Midgard games packages. It establishes the core player tracking infrastructure that other game-specific packages build upon. By standardizing player management across all Midgard games, this package ensures consistency, code reusability, and a unified player experience across the entire game ecosystem.
+
 ## Features
 
 - **Simple Player Model** - Clean Eloquent model with essential fields
