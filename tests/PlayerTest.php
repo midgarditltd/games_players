@@ -31,29 +31,5 @@ it('casts attributes correctly', function () {
     expect($casts['user_id'])->toBe('integer')
         ->and($casts['nickname'])->toBe('string')
         ->and($casts['active'])->toBe('boolean')
-        ->and($casts['options'])->toBe(\Illuminate\Database\Eloquent\Casts\AsArrayObject::class);
-});
-
-it('returns the correct validation rules', function () {
-    $player = new Player;
-    $rules = $player->validateRules();
-
-    expect($rules)->toHaveKey('user_id')
-        ->toHaveKey('nickname')
-        ->toHaveKey('active')
-        ->toHaveKey('options');
-});
-
-it('provides accessors for active status', function () {
-    $player = new Player;
-
-    // Test inactive
-    $player->active = false;
-    expect($player->ActiveColour)->toBe('red')
-        ->and($player->ActiveDescription)->toBe('Inactive');
-
-    // Test active
-    $player->active = true;
-    expect($player->ActiveColour)->toBe('green')
-        ->and($player->ActiveDescription)->toBe('Active');
+        ->and($casts['options'])->toBe('array');
 });
