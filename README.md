@@ -1,61 +1,110 @@
-# This is the base for the players for all the Midgard Games
+# Games Players - Base Player Tracking for Laravel Games
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/midgarditltd/games-players.svg?style=flat-square)](https://packagist.org/packages/midgarditltd/games-players)
 [![GitHub Tests Action Status](https://img.shields.io/github/actions/workflow/status/midgarditltd/games-players/run-tests.yml?branch=main&label=tests&style=flat-square)](https://github.com/midgarditltd/games-players/actions?query=workflow%3Arun-tests+branch%3Amain)
 [![GitHub Code Style Action Status](https://img.shields.io/github/actions/workflow/status/midgarditltd/games-players/fix-php-code-style-issues.yml?branch=main&label=code%20style&style=flat-square)](https://github.com/midgarditltd/games-players/actions?query=workflow%3A"Fix+PHP+code+style+issues"+branch%3Amain)
 [![Total Downloads](https://img.shields.io/packagist/dt/midgarditltd/games-players.svg?style=flat-square)](https://packagist.org/packages/midgarditltd/games-players)
 
-This is where your description should go. Limit it to a paragraph or two. Consider adding a small example.
+A simple, lightweight Laravel package that provides a base Player model and migration for game packages. This package is designed to be included by other game packages as the main way to track players and their games.
 
-## Support us
+## Features
 
-[<img src="https://github-ads.s3.eu-central-1.amazonaws.com/Games: Players.jpg?t=1" width="419px" />](https://spatie.be/github-ad-click/Games: Players)
-
-We invest a lot of resources into creating [best in class open source packages](https://spatie.be/open-source). You can support us
-by [buying one of our paid products](https://spatie.be/open-source/support-us).
-
-We highly appreciate you sending us a postcard from your hometown, mentioning which of our package(s) you are using. You'll find our address on [our contact page](https://spatie.be/about-us). We
-publish all received postcards on [our virtual postcard wall](https://spatie.be/open-source/postcards).
+- **Simple Player Model** - Clean Eloquent model with essential fields
+- **User Relationship** - Built-in relationship to your User model
+- **Soft Deletes** - Players are soft deleted by default
+- **Flexible Options** - JSON field for storing game-specific data
+- **Factory Support** - Includes factory for testing
+- **Configurable** - Easy configuration for custom user models
 
 ## Installation
 
-You can install the package via composer:
+Install the package via Composer:
 
 ```bash
 composer require midgarditltd/games-players
 ```
 
-You can publish and run the migrations with:
+Publish and run the migrations:
 
 ```bash
 php artisan vendor:publish --tag="games-players-migrations"
 php artisan migrate
 ```
 
-You can publish the config file with:
+Optionally, publish the config file:
 
 ```bash
 php artisan vendor:publish --tag="games-players-config"
 ```
 
-This is the contents of the published config file:
+## Usage
+
+### Basic Usage
+
+The package provides a `Player` model that you can use directly or extend in your game packages:
+
+```php
+use midgarditltd\Games\Players\Player;
+
+// Create a new player
+$player = Player::create([
+    'user_id' => auth()->id(),
+    'nickname' => 'GameMaster',
+    'active' => true,
+    'options' => ['level' => 1, 'score' => 0]
+]);
+
+// Get a player's user
+$user = $player->user;
+
+// Find players
+$activePlayers = Player::where('active', true)->get();
+$player = Player::find($id);
+```
+
+### Extending the Player Model
+
+Your game packages can extend the Player model to add game-specific functionality:
+
+```php
+namespace YourVendor\YourGame;
+
+use midgarditltd\Games\Players\Player as BasePlayer;
+
+class ChessPlayer extends BasePlayer
+{
+    public function getRatingAttribute()
+    {
+        return $this->options['rating'] ?? 1200;
+    }
+
+    public function games()
+    {
+        return $this->hasMany(ChessGame::class);
+    }
+}
+```
+
+### Player Fields
+
+The `games_players` table includes:
+
+- `id` - Auto-incrementing primary key
+- `user_id` - Foreign key to users table
+- `nickname` - Unique player nickname
+- `active` - Boolean status (default: true)
+- `options` - JSON field for game-specific data
+- `created_at` / `updated_at` - Timestamps
+- `deleted_at` - Soft delete timestamp
+
+### Configuration
+
+The config file allows you to customize the user model:
 
 ```php
 return [
+    'user_model' => \App\Models\User::class,
 ];
-```
-
-Optionally, you can publish the views using
-
-```bash
-php artisan vendor:publish --tag="games-players-views"
-```
-
-## Usage
-
-```php
-$games:Players = new midgarditltd\Games:Players();
-echo $games:Players->echoPhrase('Hello, midgarditltd!');
 ```
 
 ## Testing

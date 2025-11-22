@@ -34,7 +34,7 @@ it('can find a player by id', function () {
         'active' => true,
     ]);
 
-    $found = Player::findById($created->id);
+    $found = Player::find($created->id);
 
     expect($found->id)->toBe($created->id)
         ->and($found->nickname)->toBe('TestPlayer2');

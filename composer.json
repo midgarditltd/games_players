@@ -66,10 +66,7 @@
     "laravel": {
       "providers": [
         "midgarditltd\\Games\\Players\\PlayersServiceProvider"
-      ],
-      "aliases": {
-        "GamesPlayers": "midgarditltd\\Games\\Players\\Facades\\GamesPlayers"
-      }
+      ]
     }
   },
   "minimum-stability": "dev",
